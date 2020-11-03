@@ -3,15 +3,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ChromeEvo
+namespace ChromeEvo.Utils
 {
     public class InputUtils
     {
-        public static InputAction FindAndEnable(ref PlayerInput _input, string _name)
+        public static void CacheAndEnable(ref PlayerInput _input, ref InputAction _action, string _name)
         {
-            InputAction action = _input.actions.FindAction(_name);
-            action.Enable();
-            return action;
+            _action = _input.actions.FindAction(_name);
+            _action.Enable();
         }
 
         public static void SubscribeEvents(ref InputAction _action, Action<InputAction.CallbackContext> _performed, Action<InputAction.CallbackContext> _canceled)
