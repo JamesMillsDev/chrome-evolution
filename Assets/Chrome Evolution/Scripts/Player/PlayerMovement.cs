@@ -48,9 +48,9 @@ namespace ChromeEvo.Player
 
         [SerializeField]
         private LayerMask layerChecks;
-        [SerializeField]
+        [SerializeField, Tag]
         private string groundTag;
-        [SerializeField]
+        [SerializeField, Tag]
         private string wallTag;
 
         private PlayerInput input;

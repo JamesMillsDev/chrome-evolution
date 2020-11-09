@@ -7,7 +7,6 @@ using ChromeEvo.Utils;
 
 namespace ChromeEvo.Player
 {
-    [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
     public class ChromePlayer : MonoBehaviour
     {
@@ -24,7 +23,7 @@ namespace ChromeEvo.Player
 
         public void Setup()
         {
-            input = gameObject.GetComponent<PlayerInput>();
+            input = gameObject.GetComponentInChildren<PlayerInput>();
             collider = gameObject.GetComponent<CapsuleCollider>();
             rigidbody = gameObject.GetComponent<Rigidbody>();
 
