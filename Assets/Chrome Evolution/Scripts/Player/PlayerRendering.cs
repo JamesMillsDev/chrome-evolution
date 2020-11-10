@@ -1,6 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 
 using ChromeEvo.Utils;
@@ -10,8 +11,6 @@ namespace ChromeEvo.Player
     [RequireComponent(typeof(Animator))]
     public class PlayerRendering : Runable
     {
-        [SerializeField]
-        private Material localPlayerMat;
         [SerializeField]
         private List<Renderer> localObjects = new List<Renderer>();
 
@@ -32,7 +31,7 @@ namespace ChromeEvo.Player
             // Change all local objects to the correct layer
             foreach(Renderer rend in localObjects)
             {
-                rend.material = localPlayerMat;
+                rend.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
             }
         }
 

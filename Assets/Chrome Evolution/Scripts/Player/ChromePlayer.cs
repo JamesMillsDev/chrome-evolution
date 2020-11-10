@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using Mirror;
+
 using ChromeEvo.Utils;
 
 namespace ChromeEvo.Player
@@ -18,6 +20,7 @@ namespace ChromeEvo.Player
         private new CameraController camera;
         private new PlayerRendering renderer;
         private PlayerUI ui;
+        private PlayerStats stats;
 
         private bool isSetup = false;
 
@@ -34,19 +37,24 @@ namespace ChromeEvo.Player
             RunableUtils.Validate(ref camera, gameObject);
             RunableUtils.Validate(ref renderer, gameObject);
             RunableUtils.Validate(ref ui, gameObject);
+            RunableUtils.Validate(ref stats, gameObject);
 
             // setup runables
             RunableUtils.Setup(ref movement, input, rigidbody, collider, transform, camera);
             RunableUtils.Setup(ref camera, input, movement, transform);
             RunableUtils.Setup(ref renderer, input);
-            RunableUtils.Setup(ref ui, movement);
+            RunableUtils.Setup(ref ui, movement, stats);
+            RunableUtils.Setup(ref stats);
 
             isSetup = true;
         }
 
         private void Start()
         {
-            Setup();
+            if(!NetworkServer.active)
+            {
+                Setup();
+            }
         }
 
         private void Update()
