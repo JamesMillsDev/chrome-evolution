@@ -8,12 +8,11 @@ using ChromeEvo.Utils;
 
 namespace ChromeEvo.Player
 {
-    [RequireComponent(typeof(Animator))]
     public class PlayerRendering : Runable
     {
         [SerializeField]
         private List<Renderer> localObjects = new List<Renderer>();
-
+        [SerializeField]
         private Animator animator;
 
         private PlayerInput input;
@@ -23,7 +22,8 @@ namespace ChromeEvo.Player
         {
             // Cache components
             input = (PlayerInput)_params[0];
-            animator = gameObject.GetComponent<Animator>();
+            if(animator == null)
+                animator = gameObject.GetComponent<Animator>();
 
             // Cache input actions
             InputUtils.CacheAndEnable(ref input, ref moveAction, "Move");
