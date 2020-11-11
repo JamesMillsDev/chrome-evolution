@@ -4,7 +4,9 @@ using UnityEngine;
 
 using Mirror;
 
-namespace ChromeEvo.Player
+using ChromeEvo.Player;
+
+namespace ChromeEvo.Networking
 {
     [RequireComponent(typeof(ChromePlayer))]
     public class ChromePlayerNet : NetworkBehaviour
