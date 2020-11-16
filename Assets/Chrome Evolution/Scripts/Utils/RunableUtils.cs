@@ -6,7 +6,7 @@ namespace ChromeEvo.Utils
 {
     public class RunableUtils
     {
-        public static bool Validate<T>(ref T _runable, GameObject _from) where T : Runable
+        public static bool Validate<T>(ref T _runable, GameObject _from) where T : IRunable
         {
             if(_runable == null)
             {
@@ -25,7 +25,7 @@ namespace ChromeEvo.Utils
             return false;
         }
 
-        public static bool Setup<T>(ref T _runable, params object[] _params) where T : Runable
+        public static bool Setup<T>(ref T _runable, params object[] _params) where T : IRunable
         {
             if(_runable != null)
             {
@@ -36,7 +36,7 @@ namespace ChromeEvo.Utils
             return false;
         }
 
-        public static void Run<T>(ref T _runable, params object[] _params) where T : Runable
+        public static void Run<T>(ref T _runable, params object[] _params) where T : IRunable
         {
             if(_runable != null)
             {
