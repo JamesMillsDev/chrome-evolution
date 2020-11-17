@@ -1,18 +1,11 @@
-﻿using UnityEngine;
-
-using Mirror;
+﻿using Mirror;
 
 namespace ChromeEvo.Networking
 {
     public class ChromeNetworkManager : NetworkManager
     {
-        public bool IsHost { get; set; } = false;
+        public bool IsHost { get; private set; } = false;
 
-        public override void OnStartHost()
-        {
-            base.OnStartHost();
-
-            IsHost = true;
-        }
+        public override void OnStartHost() => IsHost = true;
     }
 }

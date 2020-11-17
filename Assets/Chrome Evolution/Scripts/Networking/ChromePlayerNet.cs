@@ -21,6 +21,27 @@ namespace ChromeEvo.Networking
         private PlayerStats stats;
 
         private bool connectedToLobbyUI = false;
+        private LobbyMenu lobby;
+
+        public override void OnStartLocalPlayer() => SceneManager.LoadSceneAsync("Lobby UI", LoadSceneMode.Additive);
+
+        public void ReadyPlayer(int _index, bool _isReady)
+        {
+            if(isLocalPlayer)
+                CmdReadyPlayer(_index, _isReady);
+        }
+
+        public void StartGame()
+        {
+            if(isLocalPlayer)
+                CmdStartGame();
+        }
+
+        public void SetName(string _name)
+        {
+            if(isLocalPlayer)
+                CmdSetPlayerName(_name);
+        }
 
         private void Start()
         {
@@ -30,90 +51,42 @@ namespace ChromeEvo.Networking
             stats = gameObject.GetComponent<PlayerStats>();
         }
 
-        public override void OnStartLocalPlayer()
-        {
-            SceneManager.LoadSceneAsync("Lobby UI", LoadSceneMode.Additive);
-        }
-
         private void Update()
         {
-            if(!connectedToLobbyUI)
+            if(lobbyPlayer.activeSelf && lobby == null)
+                lobby = FindObjectOfType<LobbyMenu>();
+
+            if(!connectedToLobbyUI && lobby != null)
             {
-                LobbyMenu lobby = FindObjectOfType<LobbyMenu>();
-                if(lobby != null)
-                {
-                    lobby.OnPlayerConnect(this);
-                    connectedToLobbyUI = true;
-                }
+                lobby.OnPlayerConnect(this);
+                connectedToLobbyUI = true;
             }
         }
 
-        public void ReadyPlayer(int _index, bool _isReady)
-        {
-            if(isLocalPlayer)
-            {
-                CmdReady(_index, _isReady);
-            }
-        }
+        [Command] public void CmdReadyPlayer(int _index, bool _isReady) => RpcReadyPlayer(_index, _isReady);
+        [ClientRpc] public void RpcReadyPlayer(int _index, bool _isReady) => lobby?.SetReadyPlayer(_index, _isReady);
 
-        [Command]
-        public void CmdReady(int _index, bool _isReady)
-        {
-            RpcReady(_index, _isReady);
-        }
+        [Command] public void CmdSetPlayerName(string _name) => RpcSetPlayerName(_name);
+        [ClientRpc] public void RpcSetPlayerName(string _name) => Stats.Username = _name;
 
-        [ClientRpc]
-        public void RpcReady(int _index, bool _isReady)
-        {
-            FindObjectOfType<LobbyMenu>().SetReadyPlayer(_index, _isReady);
-        }
-
-        public void StartGame()
-        {
-            if(isLocalPlayer)
-            {
-                CmdStartGame();
-            }
-        }
-
-        [Command]
-        public void CmdStartGame()
-        {
-            RpcStartGame();
-        }
-
+        [Command] public void CmdStartGame() => RpcStartGame();
         [ClientRpc]
         public void RpcStartGame()
         {
-            SceneManager.LoadSceneAsync("Gameplay", LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync("Lobby UI");
-            lobbyPlayer.SetActive(false);
-            gameplayPlayer.gameObject.SetActive(true);
+            ChromePlayerNet[] players = FindObjectsOfType<ChromePlayerNet>();
 
-            if(isLocalPlayer)
+            foreach(ChromePlayerNet player in players)
             {
-                gameplayPlayer.Setup(this);
+                player.lobbyPlayer.SetActive(false);
+                player.gameplayPlayer.gameObject.SetActive(true);
+
+                if(player.isLocalPlayer)
+                {
+                    SceneManager.UnloadSceneAsync("Lobby UI");
+                    SceneManager.LoadSceneAsync("Gameplay", LoadSceneMode.Additive);
+                    player.gameplayPlayer.Setup(this);
+                }
             }
-        }
-
-        public void SetName(string _name)
-        {
-            if(isLocalPlayer)
-            {
-                CmdSetName(_name);
-            }
-        }
-
-        [Command]
-        public void CmdSetName(string _name)
-        {
-            RpcSetName(_name);
-        }
-
-        [ClientRpc]
-        public void RpcSetName(string _name)
-        {
-            Stats.Username = _name;
         }
     }
 }

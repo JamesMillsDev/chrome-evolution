@@ -27,15 +27,22 @@ namespace ChromeEvo.Player
 
         private ChromePlayerNet playerNet;
 
-        public void Setup(ChromePlayerNet _player)
+        private void Awake()
         {
-            playerNet = _player;
-
-            input = gameObject.GetComponentInChildren<PlayerInput>();
+            input = FindObjectOfType<PlayerInput>();
             collider = gameObject.GetComponent<CapsuleCollider>();
             rigidbody = gameObject.GetComponent<Rigidbody>();
 
             rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+            input.enabled = false;
+        }
+
+        public void Setup(ChromePlayerNet _player)
+        {
+            playerNet = _player;
+
+            input.enabled = true;
 
             // cache components in children
             RunableUtils.Validate(ref movement, gameObject);

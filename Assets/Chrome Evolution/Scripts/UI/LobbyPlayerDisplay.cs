@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
@@ -39,16 +37,10 @@ namespace ChromeEvo.UI
         public void ToggleReadyState()
         {
             SetReadyState(!Ready);
-            if(player.isLocalPlayer)
-            {
-                player.ReadyPlayer(index, Ready);
-            }
+            player.ReadyPlayer(index, Ready);
         }
 
-        public void SetReadyState(bool _isReady)
-        {
-            Ready = _isReady;
-        }
+        public void SetReadyState(bool _isReady) => Ready = _isReady;
 
         private void Start()
         {
@@ -59,15 +51,8 @@ namespace ChromeEvo.UI
         // Update is called once per frame
         void Update()
         {
-            if(player != null)
-            {
-                playerName.text = string.IsNullOrEmpty(player.Stats.Username) ? "Player" : player.Stats.Username;
-                readyIndicator.sprite = Ready ? readySprite : notReadySprite;
-            }
-            else
-            {
-                playerName.text = "";
-            }
+            playerName.text = player != null && !string.IsNullOrEmpty(player.Stats.Username) ? player.Stats.Username : "Player";
+            readyIndicator.sprite = Ready ? readySprite : notReadySprite;
         }
     }
 }

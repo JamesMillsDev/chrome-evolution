@@ -37,6 +37,7 @@ namespace ChromeEvo.Player
             // Get the camera component and enabled it
             camera = gameObject.GetComponent<Camera>();
             camera.enabled = true;
+            input.camera = camera;
 
             // Disable the cursor
             Cursor.lockState = CursorLockMode.Locked;

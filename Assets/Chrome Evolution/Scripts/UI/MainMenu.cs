@@ -22,6 +22,9 @@ namespace ChromeEvo.UI
         {
             mainMenu.SetActive(true);
             connectMenu.SetActive(false);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         public void OnClickStart()
@@ -43,13 +46,9 @@ namespace ChromeEvo.UI
 #else
             Application.Quit();
 #endif
-
         }
 
-        public void OnClickHost()
-        {
-            NetworkManager.singleton.StartHost();
-        }
+        public void OnClickHost() => NetworkManager.singleton.StartHost();
 
         public void OnClickConnect()
         {

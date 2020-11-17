@@ -5,8 +5,6 @@ using ChromeEvo.Networking;
 
 using TMPro;
 
-using Mirror;
-
 namespace ChromeEvo.UI
 {
     public class LobbyMenu : MonoBehaviour
@@ -18,14 +16,14 @@ namespace ChromeEvo.UI
         [SerializeField]
         private Button readyButton;
         [SerializeField]
-        private TMP_InputField playerName;
+        private TMP_InputField playerNameInput;
 
         private ChromeNetworkManager chromeNetwork;
         private ChromePlayerNet localPlayer;
 
         public void OnPlayerConnect(ChromePlayerNet _player)
         {
-            for (int i = 0; i < playerDisplays.Length; i++)
+            for(int i = 0; i < playerDisplays.Length; i++)
             {
                 LobbyPlayerDisplay display = playerDisplays[i];
 
@@ -42,11 +40,16 @@ namespace ChromeEvo.UI
             }
         }
 
+        public void OnClickStart() => localPlayer.StartGame();
+
+        public void SetReadyPlayer(int _index, bool _isReady) => playerDisplays[_index].SetReadyState(_isReady);
+
         // Start is called before the first frame update
         private void Start()
         {
             chromeNetwork = ChromeNetworkManager.singleton as ChromeNetworkManager;
-            playerName.onEndEdit.AddListener(OnEndEditName);
+            playerNameInput.onEndEdit.AddListener(OnEndEditName);
+            startButton.interactable = false;
         }
 
         // Update is called once per frame
@@ -56,37 +59,22 @@ namespace ChromeEvo.UI
             {
                 foreach(LobbyPlayerDisplay display in playerDisplays)
                 {
-                    if (display.Ready || !display.Filled)
-                        continue;
+                    if(!display.Ready && display.Filled)
+                    {
+                        if(startButton.interactable)
+                        {
+                            startButton.interactable = false;
+                        }
 
-                    startButton.interactable = false;
-                    return;
+                        return;
+                    }
                 }
 
-                startButton.interactable = true;
-            }
-            else
-            {
-                startButton.interactable = false;
+                if(!startButton.interactable)
+                    startButton.interactable = true;
             }
         }
 
-        public void OnClickStart()
-        {
-            localPlayer.StartGame();
-        }
-
-        private void OnEndEditName(string _name)
-        {
-            if(localPlayer != null)
-            {
-                localPlayer.SetName(_name);
-            }
-        }
-
-        public void SetReadyPlayer(int _index, bool _isReady)
-        {
-            playerDisplays[_index].SetReadyState(_isReady);
-        }
+        private void OnEndEditName(string _name) => localPlayer?.SetName(_name);
     }
 }

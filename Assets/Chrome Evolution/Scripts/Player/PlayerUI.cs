@@ -15,12 +15,16 @@ namespace ChromeEvo.Player
         private TextMeshProUGUI clipAmmoText;
         [SerializeField]
         private TextMeshProUGUI totalAmmoText;
+        [SerializeField]
+        private GameObject canvas;
 
         private PlayerMovement movement;
         private PlayerStats stats;
-
+        
         public override void Setup(params object[] _params)
         {
+            canvas.SetActive(true);
+
             movement = (PlayerMovement)_params[0];
             stats = (PlayerStats)_params[1];
 
