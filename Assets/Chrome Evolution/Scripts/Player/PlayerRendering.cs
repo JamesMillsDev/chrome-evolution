@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 using ChromeEvo.Utils;
 
+using Mirror;
+
 namespace ChromeEvo.Player
 {
     public class PlayerRendering : Runable
@@ -14,6 +16,8 @@ namespace ChromeEvo.Player
         private List<Renderer> localObjects = new List<Renderer>();
         [SerializeField]
         private Animator animator;
+        [SerializeField]
+        private NetworkAnimator netAnimator;
 
         private PlayerInput input;
         private InputAction moveAction;

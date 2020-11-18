@@ -12,6 +12,8 @@ namespace ChromeEvo.UI
         [SerializeField]
         private LobbyPlayerDisplay[] playerDisplays;
         [SerializeField]
+        private WeaponButton[] weaponButtons;
+        [SerializeField]
         private Button startButton;
         [SerializeField]
         private Button readyButton;
@@ -50,6 +52,13 @@ namespace ChromeEvo.UI
             chromeNetwork = ChromeNetworkManager.singleton as ChromeNetworkManager;
             playerNameInput.onEndEdit.AddListener(OnEndEditName);
             startButton.interactable = false;
+
+            foreach(WeaponButton button in weaponButtons)
+            {
+                button.Setup(this);
+            }
+
+            weaponButtons[0].SetActiveWeapon();
         }
 
         // Update is called once per frame
@@ -76,5 +85,16 @@ namespace ChromeEvo.UI
         }
 
         private void OnEndEditName(string _name) => localPlayer?.SetName(_name);
+
+        public void OnSelectWeapon(WeaponButton _button)
+        {
+            foreach(WeaponButton button in weaponButtons)
+            {
+                if(button.Equals(_button))
+                    continue;
+
+                button.Disable();
+            }
+        }
     }
 }

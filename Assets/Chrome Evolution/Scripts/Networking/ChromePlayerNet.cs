@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 using Mirror;
 
 using ChromeEvo.UI;
 using ChromeEvo.Player;
+using ChromeEvo.Weapons;
+
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+
+using System.Collections.Generic;
 
 namespace ChromeEvo.Networking
 {
     [RequireComponent(typeof(PlayerStats))]
-    public class ChromePlayerNet : NetworkBehaviour
+    [ShowOdinSerializedPropertiesInInspector]
+    public class ChromePlayerNet : NetworkBehaviour, ISerializationCallbackReceiver, ISupportsPrefabSerialization
     {
         public PlayerStats Stats { get { return stats; } }
 
@@ -17,13 +23,17 @@ namespace ChromeEvo.Networking
         private GameObject lobbyPlayer;
         [SerializeField]
         private GameplayPlayer gameplayPlayer;
+        [SerializeField]
+        private Dictionary<WeaponType, Weapon> weapons = new Dictionary<WeaponType, Weapon>();
 
         private PlayerStats stats;
 
         private bool connectedToLobbyUI = false;
         private LobbyMenu lobby;
 
-        public override void OnStartLocalPlayer() => SceneManager.LoadSceneAsync("Lobby UI", LoadSceneMode.Additive);
+        private WeaponType weapon;
+
+        public override void OnStartLocalPlayer() => LevelManager.instance.LoadLobby();
 
         public void ReadyPlayer(int _index, bool _isReady)
         {
@@ -82,11 +92,25 @@ namespace ChromeEvo.Networking
 
                 if(player.isLocalPlayer)
                 {
-                    SceneManager.UnloadSceneAsync("Lobby UI");
-                    SceneManager.LoadSceneAsync("Gameplay", LoadSceneMode.Additive);
+                    LevelManager.instance.LoadGameplay();
                     player.gameplayPlayer.Setup(this);
                 }
             }
+        }
+
+        [SerializeField, HideInInspector]
+        private SerializationData serializationData;
+
+        SerializationData ISupportsPrefabSerialization.SerializationData { get { return this.serializationData; } set { this.serializationData = value; } }
+
+        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        {
+            UnitySerializationUtility.DeserializeUnityObject(this, ref this.serializationData);
+        }
+
+        void ISerializationCallbackReceiver.OnBeforeSerialize()
+        {
+            UnitySerializationUtility.SerializeUnityObject(this, ref this.serializationData);
         }
     }
 }
