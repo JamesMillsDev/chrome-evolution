@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Chrome Evolution/Scenes/Lobby.unity
     guid: c4efabc9d8a75e148bb45ecdaac12bac
+  - enabled: 1
+    path: Assets/Chrome Evolution/Scenes/GameplayNew.unity
+    guid: 287a4e145f2fb0a4c9a778aa17724ee3
   m_configObjects: {}

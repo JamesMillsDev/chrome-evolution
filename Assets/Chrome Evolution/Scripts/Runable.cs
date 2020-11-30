@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Sirenix.OdinInspector;
 
 namespace ChromeEvo
 {
-    public abstract class Runable : MonoBehaviour, IRunable
+    public abstract class Runable : SerializedMonoBehaviour, IRunable
     {
         public abstract void Setup(params object[] _params);
         public abstract void Run(params object[] _params);

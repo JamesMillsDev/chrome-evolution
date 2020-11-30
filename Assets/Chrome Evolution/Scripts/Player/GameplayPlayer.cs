@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-using Mirror;
-
 using ChromeEvo.Utils;
+using ChromeEvo.Weapons;
 using ChromeEvo.Networking;
 
 namespace ChromeEvo.Player
@@ -25,7 +22,7 @@ namespace ChromeEvo.Player
 
         private bool isSetup = false;
 
-        private ChromePlayerNet playerNet;
+        private PlayerNet playerNet;
 
         private void Awake()
         {
@@ -34,15 +31,11 @@ namespace ChromeEvo.Player
             rigidbody = gameObject.GetComponent<Rigidbody>();
 
             rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-
-            input.enabled = false;
         }
 
-        public void Setup(ChromePlayerNet _player)
+        public void Setup(PlayerNet _player)
         {
             playerNet = _player;
-
-            input.enabled = true;
 
             // cache components in children
             RunableUtils.Validate(ref movement, gameObject);
@@ -55,7 +48,7 @@ namespace ChromeEvo.Player
             RunableUtils.Setup(ref movement, input, rigidbody, collider, transform, camera);
             RunableUtils.Setup(ref camera, input, movement, transform);
             RunableUtils.Setup(ref renderer, input);
-            RunableUtils.Setup(ref ui, movement, stats);
+            RunableUtils.Setup(ref ui, movement, stats, playerNet);
             RunableUtils.Setup(ref stats);
 
             isSetup = true;
@@ -68,6 +61,12 @@ namespace ChromeEvo.Player
                 RunableUtils.Run(ref camera);
                 RunableUtils.Run(ref renderer);
                 RunableUtils.Run(ref ui);
+
+                Weapon weapon = playerNet.GetWeapon();
+                if (weapon != null)
+                {
+                    RunableUtils.Run(ref weapon);
+                }
             }
         }
 

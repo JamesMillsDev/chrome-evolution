@@ -10,6 +10,7 @@ using Mirror;
 
 namespace ChromeEvo.Player
 {
+#pragma warning disable 0649
     public class PlayerRendering : Runable
     {
         [SerializeField]

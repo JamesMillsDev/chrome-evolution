@@ -16,4 +16,56 @@ MonoBehaviour:
   defaultEditorBehaviour: 11
   processMouseMoveInInspector: 1
   drawingConfig:
-    configs: []
+    configs:
+    - DrawnTypeName: Mirror.EnterPlayModeSettingsCheck, Mirror.Editor
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.FallbackTransport, Mirror
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.MultiplexTransport, Mirror
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.NetworkIdentity, Mirror
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.NetworkManagerHUD, Mirror
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.NetworkPingDisplay, Mirror.Components
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.NetworkScenePostProcess, Mirror.Editor
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.NetworkStartPosition, Mirror
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.TelepathyTransport, Mirror
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Authenticators.BasicAuthenticator, Mirror.Authenticators
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Authenticators.TimeoutAuthenticator, Mirror.Authenticators
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Cloud.ApiConnector, Mirror.Cloud
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Cloud.Example.ApiUpdater, Mirror.Examples.Cloud.GUI
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Cloud.Example.QuickListServerDebug, Mirror.Examples.Cloud.GUI
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Cloud.Example.ServerListManager, Mirror.Examples.Cloud.GUI
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Cloud.Example.ServerListUI, Mirror.Examples.Cloud.GUI
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Cloud.Example.ServerListUIItem, Mirror.Examples.Cloud.GUI
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Cloud.Examples.InstantiateNetworkManager, Mirror.Examples.Cloud.GUI
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Discovery.NetworkDiscovery, Mirror.Components
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Discovery.NetworkDiscoveryHUD, Mirror.Components
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Examples.Chat.ChatWindow, Mirror.Examples
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Examples.MultipleAdditiveScenes.PhysicsSimulator, Mirror.Examples
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Examples.Pong.QuitButtonHUD, Mirror.Examples.Cloud.GUI
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Examples.Tanks.TankGameManager, Mirror.Examples
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Logging.NetworkHeadlessLogger, Mirror
+      EditorTypeName: 
+    - DrawnTypeName: Mirror.Websocket.WebsocketTransport, Mirror.Websocket
+      EditorTypeName: 

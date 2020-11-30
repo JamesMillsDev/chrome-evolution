@@ -7,9 +7,12 @@ using ChromeEvo.Weapons;
 
 namespace ChromeEvo.UI
 {
+#pragma warning disable 0649
     [RequireComponent(typeof(Button))]
     public class WeaponButton : MonoBehaviour
     {
+        public WeaponType Weapon { get { return weapon; } }
+
         private Button button;
         private LobbyMenu lobby;
 

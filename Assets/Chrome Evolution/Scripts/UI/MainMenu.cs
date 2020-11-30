@@ -6,6 +6,7 @@ using TMPro;
 
 namespace ChromeEvo.UI
 {
+#pragma warning disable 0649
     public class MainMenu : MonoBehaviour
     {
         [SerializeField]

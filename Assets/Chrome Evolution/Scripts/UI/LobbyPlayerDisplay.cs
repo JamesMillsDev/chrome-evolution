@@ -4,9 +4,11 @@ using UnityEngine.UI;
 using TMPro;
 
 using ChromeEvo.Networking;
+using ChromeEvo.Networking.Packets;
 
 namespace ChromeEvo.UI
 {
+#pragma warning disable 0649
     public class LobbyPlayerDisplay : MonoBehaviour
     {
         public bool Filled { get { return button.interactable; } }
@@ -23,10 +25,10 @@ namespace ChromeEvo.UI
         [SerializeField]
         private Sprite notReadySprite;
 
-        private ChromePlayerNet player;
+        private PlayerNet player;
         private int index;
 
-        public void AssignPlayer(ChromePlayerNet _player, int _index)
+        public void AssignPlayer(PlayerNet _player, int _index)
         {
             player = _player;
             index = _index;
@@ -37,12 +39,12 @@ namespace ChromeEvo.UI
         public void ToggleReadyState()
         {
             SetReadyState(!Ready);
-            player.ReadyPlayer(index, Ready);
+            PacketHandler.SendPacket(new PacketReadyPlayer(Ready, index));
         }
 
         public void SetReadyState(bool _isReady) => Ready = _isReady;
 
-        private void Start()
+        private void Awake()
         {
             button.interactable = false;
             readyIndicator.gameObject.SetActive(false);

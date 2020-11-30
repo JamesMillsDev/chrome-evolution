@@ -7,6 +7,7 @@ using ChromeEvo.Utils;
 
 namespace ChromeEvo.Player
 {
+    #pragma warning disable 0649
     public class PlayerMovement : Runable
     {
         public float SprintVisualFactor { get { return remainingSprintTime / sprintTime; } }
